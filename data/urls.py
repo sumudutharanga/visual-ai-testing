@@ -1,0 +1,1 @@
+BASE_URL = "https://sumudutharanga.github.io/File-Uploader-Modal-/"

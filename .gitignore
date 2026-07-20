@@ -1,0 +1,8 @@
+venv/
+.idea/
+
+screenshots/
+reports/
+
+__pycache__/
+*.pyc
