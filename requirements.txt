@@ -1,0 +1,171 @@
+# Add Preview Images — Modal Requirements Document
+
+## 1. Overview
+A modal dialog that lets a user add preview images/files to a project by either:
+- **Uploading a file** from their device (via click or drag-and-drop), **or**
+- **Importing a file from a URL**
+Only one source (file **or** URL) is active at a time. The modal validates input, shows inline errors, and confirms success only after a valid import.
+
+---
+
+## 2. Component Structure
+
+| # | Element | Description |
+|---|---|---|
+| 1 | Modal Card | Container, rounded corners, centered on screen at all viewport sizes |
+| 2 | Title | "Add Preview Images!" |
+| 3 | Close Button (×) | Top-right corner, closes/resets the modal |
+| 4 | Dropzone | Drag-and-drop + click-to-browse file upload area |
+| 5 | Dropzone helper text | Lists accepted file formats |
+| 6 | Dropzone error message | Shown inline when an invalid file is selected |
+| 7 | Divider | "OR" separator between the two import methods |
+| 8 | URL Label | "Import from URL" |
+| 9 | URL Input + Upload button | Text field for pasting a URL, with a confirm action |
+| 10 | URL error message | Shown inline when the URL is empty or invalid |
+| 11 | Status Banner | Shows the "required" warning or the "success" confirmation |
+| 12 | Help Center link | Bottom-left, opens help/support |
+| 13 | Cancel button | Bottom-right, resets all modal state |
+| 14 | Import button | Bottom-right (primary), validates and confirms the import |
+
+---
+
+## 3. Visual / Layout Requirements
+
+- **Responsive & centered**: the modal must remain centered in the viewport at all screen sizes (desktop, tablet, mobile), fluidly resizing rather than clipping.
+- Base reference size (from Figma): **405 × 399px** card on a **1280 × 832px** frame.
+- On small screens (≤480px width): footer actions (Cancel/Import) stack full-width below the Help Center link.
+- Color reference:
+  - Card background: `#E8E4E4`
+  - Dropzone background: `#FAFDFF`, dashed border `#E4EDF4`
+  - Primary/accent (links, Import button): `#4000FF`
+  - Error state: red border/background/text
+  - Success state: green background/text
+---
+
+## 4. Functional Requirements
+
+### 4.1 File Upload (Dropzone)
+| ID | Requirement |
+|---|---|
+| FR-1 | User can click anywhere in the dropzone to open the native file picker. |
+| FR-2 | User can drag a file over the dropzone (visual highlight on drag-over) and drop it to select it. |
+| FR-3 | **Accepted formats only:** `.fig`, `.zip`, `.pdf`, `.png`, `.jpeg` (`.jpg` also accepted as an equivalent of `.jpeg`). |
+| FR-4 | If the selected/dropped file's extension is **not** in the accepted list, reject the file and show an inline error: **"Unsupported file format. Please upload fig, zip, pdf, png, jpeg files only."** The dropzone border turns red; no file is retained. |
+| FR-5 | If the file is valid, display a confirmation chip with the file name and a remove (×) control, replacing the default dropzone prompt. |
+| FR-6 | Selecting a valid file **clears any previously entered/confirmed URL** (file and URL are mutually exclusive). |
+| FR-7 | Removing the selected file (× on the chip) returns the dropzone to its default empty state. |
+
+### 4.2 Import from URL
+| ID | Requirement |
+|---|---|
+| FR-8 | User can type a URL into the "Add file URL" field. |
+| FR-9 | Clicking **Upload** (or pressing Enter in the field) validates the URL. |
+| FR-10 | If the field is empty on confirm, show error: **"Please enter a URL."** |
+| FR-11 | If the value is not a well-formed `http://` or `https://` URL, show error: **"Invalid URL"**. Input border turns red. |
+| FR-12 | If the URL is valid, mark it as confirmed (border turns accent color) and **clear any previously selected file** (mutually exclusive with file upload). |
+| FR-13 | Typing in the URL field after an error clears the error state. |
+
+### 4.3 Import Button
+| ID | Requirement |
+|---|---|
+| FR-14 | Clicking **Import** with **no file selected and no confirmed URL** shows a required-field banner: **"Please upload a file or import a URL before continuing."** |
+| FR-15 | Clicking **Import** with a valid file **or** a valid confirmed URL present shows a success banner: **"Imported successfully: [file name / URL]"**. |
+| FR-16 | The success/required banner replaces any previous banner state (only one visible at a time). |
+
+### 4.4 Cancel Button
+| ID | Requirement |
+|---|---|
+| FR-17 | Clicking **Cancel** resets the entire modal: clears selected file, clears URL text and confirmed URL, clears all field errors, clears the status banner. |
+
+### 4.5 Close Button (×)
+| ID | Requirement |
+|---|---|
+| FR-18 | Clicking the close icon performs the same full reset as Cancel (clears file, URL, errors, banner). |
+
+### 4.6 Help Center
+| ID | Requirement |
+|---|---|
+| FR-19 | Help Center is a clickable element (link/button) intended to route the user to support/help documentation. *(Destination/behavior to be defined — currently a placeholder action.)* |
+
+---
+
+## 5. Validation Summary Table
+
+| Scenario | Trigger | Result |
+|---|---|---|
+| Valid file type | Drop/select `.fig .zip .pdf .png .jpeg/.jpg` | File accepted, shown as chip |
+| Invalid file type | Drop/select any other extension (e.g. `.txt`, `.docx`, `.mp4`) | Rejected, error message shown, dropzone highlighted red |
+| Empty URL, click Upload | Click Upload with blank field | Error: "Please enter a URL." |
+| Malformed URL, click Upload | e.g. `not-a-url`, `abc123` | Error: "Invalid URL" |
+| Valid URL, click Upload | e.g. `https://example.com/image.png` | URL confirmed, file cleared if any |
+| Click Import, nothing provided | No file, no confirmed URL | Required-field banner shown |
+| Click Import, file or URL present | Valid file or confirmed URL exists | Success banner shown |
+| Click Cancel / Close | Any state | Full reset — no data retained |
+
+---
+
+## 6. States to Support (for QA test design)
+
+1. **Default / empty state** — no file, no URL, no errors, no banner.
+2. **Drag-over state** — dropzone highlighted while a file is being dragged over it.
+3. **File error state** — invalid file type rejected.
+4. **File selected state** — valid file shown as a chip.
+5. **URL error state (empty)**.
+6. **URL error state (invalid format)**.
+7. **URL confirmed state**.
+8. **Import blocked (required) state**.
+9. **Import success state (via file)**.
+10. **Import success state (via URL)**.
+11. **Post-cancel / post-close reset state**.
+---
+
+## 7. Non-Functional / UX Requirements
+
+- Modal must be fully responsive and centered at all breakpoints (desktop, tablet, mobile).
+- All interactive elements must be keyboard-accessible (dropzone and buttons operable via Enter/Space, focus states visible).
+- Error and success messages must use distinct, accessible color coding (red for error, green for success) plus text — not color alone.
+- Every element carries QA automation hooks: `id`, `data-testid`, and `data-qa` attributes (see Section 8) for automated test scripting.
+---
+
+## 8. QA Automation ID Reference
+
+| Element | id / data-testid / data-qa |
+|---|---|
+| Modal frame | `preview-images-frame` |
+| Modal card | `preview-images-card` |
+| Title | `preview-images-title` |
+| Close button | `preview-images-close-btn` |
+| Dropzone | `preview-images-dropzone` |
+| Hidden file input | `preview-images-file-input` |
+| Dropzone default view | `preview-images-dropzone-default` |
+| Choose file link | `preview-images-choose-file-link` |
+| File chip (selected file) | `preview-images-file-chip` |
+| File name text | `preview-images-file-name` |
+| Remove file button | `preview-images-file-remove-btn` |
+| Dropzone error message | `preview-images-dropzone-error` / `preview-images-dropzone-error-text` |
+| Divider | `preview-images-divider` |
+| URL label | `preview-images-url-label` |
+| URL input box | `preview-images-url-box` |
+| URL text input | `preview-images-url-input` |
+| URL upload/confirm button | `preview-images-url-upload-btn` |
+| URL error message | `preview-images-url-error` / `preview-images-url-error-text` |
+| Status banner | `preview-images-banner` / `preview-images-banner-text` |
+| Help Center button | `preview-images-help-center-btn` |
+| Cancel button | `preview-images-cancel-btn` |
+| Import button | `preview-images-import-btn` |
+| Footer / footer actions | `preview-images-footer` / `preview-images-footer-actions` |
+
+---
+
+## 9. Out of Scope / Open Items
+
+- Actual backend upload/import call (current implementation is front-end validation only; no file is transmitted to a server).
+- Multi-file upload (current requirement is single file at a time).
+- File size limit (not specified — recommend defining a max size, e.g. 25MB, and an error message for oversized files).
+- URL content-type/reachability check (current validation only checks URL *format*, not whether the URL actually points to a valid/downloadable file).
+- Help Center destination/link target.
+
+
+
+python-dotenv
+requests
