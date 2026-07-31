@@ -1,0 +1,63 @@
+
+{
+  "modal": {
+    "match": {
+      "name": "Light-Default",
+      "type": "FRAME"
+    }
+  },
+  "title": {
+    "match": {
+      "characters": "Add Preview Images!",
+      "type": "TEXT"
+    }
+  },
+  "close_button": {
+    "match": {
+      "name": "close-square",
+      "type": "INSTANCE"
+    }
+  },
+  "dropzone": {
+    "match": {
+      "name": "Frame 1",
+      "type": "FRAME"
+    }
+  },
+  "url_label": {
+    "match": {
+      "characters": "Import from URL",
+      "type": "TEXT"
+    }
+  },
+  "url_input": {
+    "match": {
+      "name": "Frame 7",
+      "type": "FRAME"
+    }
+  },
+  "url_upload_button": {
+    "match": {
+      "characters": "Upload",
+      "type": "TEXT"
+    }
+  },
+  "help_button": {
+    "match": {
+      "characters": "Help Center",
+      "type": "TEXT"
+    }
+  },
+  "cancel_button": {
+    "match": {
+      "characters": "Cancel",
+      "type": "TEXT"
+    }
+  },
+  "import_button": {
+    "match": {
+      "characters": "Import",
+      "type": "TEXT"
+    }
+  }
+}
