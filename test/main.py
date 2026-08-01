@@ -29,7 +29,7 @@ def main():
     run_final_report()
 
     # Reads final_report.json and creates Jira tickets
-    run_jira_integration()
+    #run_jira_integration()
 
     # Generates and opens HTML
     run_html_report()

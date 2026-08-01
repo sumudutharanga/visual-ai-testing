@@ -59,6 +59,20 @@ def normalize(value: Any) -> Any:
 
     return value
 
+def normalize_font_family(value: Any) -> list[str]:
+    if not isinstance(value, str):
+        return []
+
+    families = []
+
+    for item in value.split(","):
+        cleaned = item.strip().strip('"').strip("'").lower()
+
+        if cleaned:
+            families.append(cleaned)
+
+    return families
+
 
 def parse_pixel_value(value: Any) -> float | None:
     if value is None or isinstance(value, bool):
@@ -99,6 +113,16 @@ def compare_values(
     expected: Any,
     actual: Any,
 ) -> tuple[bool, float | None]:
+    if property_name == "fontFamily":
+        expected_fonts = normalize_font_family(expected)
+        actual_fonts = normalize_font_family(actual)
+
+        if not expected_fonts or not actual_fonts:
+            return False, None
+
+        expected_primary = expected_fonts[0]
+
+        return expected_primary in actual_fonts, None
 
     if property_name in PIXEL_PROPERTIES:
         expected_number = parse_pixel_value(expected)

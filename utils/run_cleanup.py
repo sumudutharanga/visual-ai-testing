@@ -4,6 +4,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+
 GENERATED_FOLDERS = [
     PROJECT_ROOT / "reports" / "css",
     PROJECT_ROOT / "reports" / "dom",
@@ -12,8 +13,10 @@ GENERATED_FOLDERS = [
     PROJECT_ROOT / "reports" / "validation",
     PROJECT_ROOT / "reports" / "ai",
     PROJECT_ROOT / "reports" / "final",
+    PROJECT_ROOT / "reports" / "jira",
     PROJECT_ROOT / "screenshots" / "components",
 ]
+
 
 GENERATED_FILES = [
     PROJECT_ROOT / "screenshots" / "actual.png",
@@ -21,21 +24,25 @@ GENERATED_FILES = [
     PROJECT_ROOT / "reports" / "highlighted.png",
     PROJECT_ROOT / "reports" / "mask.png",
     PROJECT_ROOT / "reports" / "visual_report.json",
-    PROJECT_ROOT / "reports" / "jira",
 ]
 
 
 def clean_previous_run() -> None:
-    print("\nCleaning previous generated results...")
+    print("Cleaning previous generated results...")
 
+    # Delete and recreate generated folders
     for folder in GENERATED_FOLDERS:
         if folder.exists():
             shutil.rmtree(folder)
 
         folder.mkdir(parents=True, exist_ok=True)
 
+    # Delete generated files
     for file_path in GENERATED_FILES:
         if file_path.exists():
-            file_path.unlink()
+            if file_path.is_file():
+                file_path.unlink()
+            elif file_path.is_dir():
+                shutil.rmtree(file_path)
 
     print("Previous generated results removed.")
