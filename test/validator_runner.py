@@ -2,9 +2,8 @@ from utils.validator import validate
 
 
 def run_validation():
-
-    print("\n========== Phase 8 ==========")
+    print("\n========== PHASE 8: VALIDATION ==========")
 
     validate()
 
-    print("Validation completed.")
+    print("Validation completed successfully.")

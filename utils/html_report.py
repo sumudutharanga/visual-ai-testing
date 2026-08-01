@@ -5,6 +5,9 @@ import webbrowser
 
 from jinja2 import Environment, FileSystemLoader
 
+from time import time
+
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 FINAL_REPORT = PROJECT_ROOT / "reports" / "final" / "final_report.json"
@@ -44,4 +47,5 @@ def generate_html():
     #print("HTML Report Saved :", OUTPUT)
 
     # Automatically open the report
-    webbrowser.open(OUTPUT.resolve().as_uri())
+    report_url = f"{OUTPUT.resolve().as_uri()}?run={int(time())}"
+    webbrowser.open(report_url)
