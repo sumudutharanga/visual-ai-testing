@@ -1,63 +1,109 @@
-
 {
   "modal": {
     "match": {
       "name": "Light-Default",
       "type": "FRAME"
-    }
+    },
+    "target": "self"
   },
+
   "title": {
     "match": {
       "characters": "Add Preview Images!",
       "type": "TEXT"
-    }
+    },
+    "target": "self"
   },
+
   "close_button": {
     "match": {
       "name": "close-square",
       "type": "INSTANCE"
-    }
+    },
+    "target": "self"
   },
+
   "dropzone": {
     "match": {
-      "name": "Frame 1",
-      "type": "FRAME"
+      "characters": "Drag & Drop or Choose file to upload",
+      "type": "TEXT"
+    },
+    "target": "ancestor",
+    "ancestor": {
+      "type": "FRAME",
+      "width": 373,
+      "height": 104
     }
   },
+
+  "choose_file": {
+    "match": {
+      "characters": "Drag & Drop or Choose file to upload",
+      "type": "TEXT"
+    },
+    "target": "self",
+    "text_mode": "contains",
+    "expected_text": "Choose file"
+  },
+
+  "divider": {
+    "match": {
+      "characters": "OR",
+      "type": "TEXT"
+    },
+    "target": "parent"
+  },
+
   "url_label": {
     "match": {
       "characters": "Import from URL",
       "type": "TEXT"
-    }
+    },
+    "target": "self"
   },
+
   "url_input": {
     "match": {
-      "name": "Frame 7",
-      "type": "FRAME"
+      "characters": "Add file URL",
+      "type": "TEXT"
+    },
+    "target": "ancestor",
+    "ancestor": {
+      "type": "FRAME",
+      "width": 373,
+      "height": 45
     }
   },
+
   "url_upload_button": {
     "match": {
       "characters": "Upload",
       "type": "TEXT"
-    }
+    },
+    "target": "parent"
   },
+
   "help_button": {
     "match": {
       "characters": "Help Center",
       "type": "TEXT"
-    }
+    },
+    "target": "parent"
   },
+
   "cancel_button": {
     "match": {
       "characters": "Cancel",
       "type": "TEXT"
-    }
+    },
+    "target": "parent"
   },
+
   "import_button": {
     "match": {
       "characters": "Import",
       "type": "TEXT"
-    }
+    },
+    "target": "parent"
   }
 }
