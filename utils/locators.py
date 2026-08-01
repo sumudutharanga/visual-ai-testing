@@ -27,3 +27,9 @@ CANCEL_BUTTON = "preview-images-cancel-btn"
 
 # Import Button
 IMPORT_BUTTON = "preview-images-import-btn"
+
+#URL
+URL_LABEL= "preview-images-url-label"
+
+#Divider
+DIVIDER= "preview-images-divider"
